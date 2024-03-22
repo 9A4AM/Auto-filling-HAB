@@ -1,0 +1,31 @@
+--release
+--output
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects
+--lib
+C:\Android\platforms\android-33\android.jar
+C:\Android\tools\..\extras\b4a_local\unpacked-b4ashared-63810068728000\dex_v1\b4ashared.zip
+C:\Android\tools\..\extras\b4a_local\unpacked-core-63810068728000\dex_v1\core.zip
+C:\Android\tools\..\extras\b4a_local\unpacked-phone-63810068730000\dex_v1\phone.zip
+C:\Android\tools\..\extras\b4a_local\unpacked-serial-63810068730000\dex_v1\serial.zip
+C:\Android\tools\..\extras\b4a_local\unpacked-xui-63810068730000\dex_v1\xui.zip
+C:\Android\tools\..\extras\b4a_local\unpacked-randomaccessfile-63810068730000\dex_v1\randomaccessfile.zip
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\asyncstreamstext.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\doubletaptoclose.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\gauge$ResumableSub_AnimateValueTo.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\gauge$_gaugerange.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\gauge.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$1.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$B4AMenuItemsClickListener.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$HandleKeyDelayed.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$ResumeMessage.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$WaitForLayout.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main$_nameandmac.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\main.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\R$drawable.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\R.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\starter$1.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\starter$2.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\starter$starter_BR.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\starter.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\designerscripts\LS_1.dex
+C:\Users\9A4AM\Desktop\B4A SCALE BALLOON 9A4AM V2\Objects\dexed\b4a\example3\designerscripts\LS_2.dex

@@ -1,0 +1,467 @@
+﻿Build1=Default,b4a.example3
+File1=1.bal
+File2=2.bal
+File3=Crysta.ttf
+File4=sonde.jpg
+FileGroup1=Default Group
+FileGroup2=Default Group
+FileGroup3=New Group
+FileGroup4=Default Group
+Group=Default Group
+Library1=core
+Library2=phone
+Library3=serial
+Library4=xui
+Library5=randomaccessfile
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="31"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~AddPermission(android.permission.ACCESS_FINE_LOCATION)~\n~AddPermission(android.permission.BLUETOOTH_SCAN)~\n~AddPermission(android.permission.BLUETOOTH_CONNECT)
+Module1=AsyncStreamsText
+Module2=DoubleTaptoClose
+Module3=Gauge
+Module4=Starter
+NumberOfFiles=4
+NumberOfLibraries=5
+NumberOfModules=4
+Version=12.2
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Scale balloon by 9A4AM
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: portrait
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	Dim admin As BluetoothAdmin
+	Dim serial1 As Serial
+	'Dim foundDevices As List
+	Dim ast As AsyncStreamsText
+	Type NameAndMac (Name As String, Mac As String)
+	'Dim connectedDevice As NameAndMac
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Dim mResult As String
+	Dim mResult_mode As String
+	Dim mResult_lift As String
+	Dim mResult_auto As String
+	Dim mResul_Tare As String
+	Dim Recv As String
+	Dim Out As Float
+	mResult = ""
+	mResult_mode = ""
+	mResult_lift = ""
+	mResult_auto = ""
+	mResul_Tare = ""
+End Sub
+
+Sub Globals
+
+	Private Gauge1 As Gauge
+	Private Gauge2 As Gauge
+	Private xui As XUI
+	Private Button1 As Button
+	Private Label3 As Label
+	Private Label4 As Label
+	Dim podaci As TextWriter
+	Dim Ekran As PhoneWakeState
+	Dim D As DoubleTaptoClose
+	
+	
+	Dim connected As Boolean
+	
+	
+	
+	Private ImageView1 As ImageView
+	Private Label1 As Label
+	Private Label2 As Label
+	Private Label5 As Label
+	Private Label6 As Label
+	Private EditText1 As EditText
+	Private Label8 As Label
+	Private Label7 As Label
+	Private Label9 As Label
+	Private Button2 As Button
+	Private Label10 As Label
+	Dim Flag1 As String
+	
+	Private Label11 As Label
+	Private Button3 As Button
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("2")
+	D.Initialize ("Tap BACK again to exit",Me,"BeforeClose",2,2000)
+	Gauge1.SetRanges(Array(Gauge1.CreateRange(0, 8, xui.Color_Yellow), Gauge1.CreateRange(8, 10, xui.Color_Green), _
+		Gauge1.CreateRange(10, 20, xui.Color_Red)))
+	Gauge1.CurrentValue = 0
+	serial1.Disconnect
+	If FirstTime Then
+		admin.Initialize("admin")
+		serial1.Initialize("Serial1")
+	
+	End If
+	Activity.AddMenuItem("Connect", "mnuConnect")
+	Activity.AddMenuItem("Disconnect", "mnuDisc")
+	Activity.AddMenuItem("Disconnect&Exit", "mnuDisconnect")
+	Label9.Visible = False
+	Label10.Visible = True
+	Label11.Visible = True
+	Flag1= "prg_helium"
+	mResult_mode = "prg_hel"
+	mResult_lift = "8"
+	mResult_auto ="man"
+	mResul_Tare = "TN"
+	Button1.Color = Colors.Yellow
+	Button1.Text = "AUTO FILLING INACTIV"
+	
+End Sub
+
+Sub Button1_Click
+	'Dim NewValue As Float = Rnd(0, 20)
+	mResult_auto = "aut"
+	Button1.Color = Colors.Green
+	Button1.Text = "AUTO FILLING ACTIV"
+	'Gauge1.CurrentValue = NewValue
+	'mResult_lift = EditText1.Text
+	SEND_Data
+	'Wait (5)
+	'mResult_auto = "man"
+	'Button1.Color = Colors.Red
+	'Button1.Text = "AUTO FILLING COMPLETE"
+	'SEND_Data
+
+End Sub
+
+
+Sub Button2_Click
+	
+
+	
+	If Flag1 = "prg_helium" Then
+		Label9.Visible = True
+		Label10.Visible = False
+		Label6.Color = Colors.Green
+		mResult_mode = "prg_hyd"
+		Flag1 = "prg_hydrogen"
+	Else
+		Label9.Visible = False
+		Label10.Visible = True
+		Label6.Color = Colors.Red
+		mResult_mode = "prg_hel"
+		Flag1 = "prg_helium"
+		
+	End If
+	
+	SEND_Data
+
+End Sub
+
+Sub Button3_Click
+	
+
+	
+	mResul_Tare = "TY"
+	
+	
+	SEND_Data
+
+End Sub
+
+
+Sub Activity_Resume
+	Ekran.KeepAlive(True)
+	Ekran.PartialLock
+	'serial1.Initialize("Serial1")
+	If admin.IsEnabled = False Then
+		If admin.Enable = False Then
+			ToastMessageShow("Error enabling Bluetooth adapter.", True)
+		Else
+			ToastMessageShow("Enabling Bluetooth adapter...", False)
+			'the StateChanged event will be soon raised
+			'Sleep(5000)
+			Wait(4)
+			Msgbox("Please power on scale and confirm OK!!" , "Wait please!")
+			
+			'serial1.Connect("00:15:83:3D:5D:D6")'moj BT Mac address
+		End If
+	Else
+		Admin_StateChanged(admin.STATE_ON, 0)
+		'serial1.Connect("00:15:83:3D:5D:D6")
+	End If
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+	Ekran.ReleaseKeepAlive
+	Ekran.ReleasePartialLock
+	If UserClosed Then
+		podaci.Close
+		ast.Close
+		serial1.Disconnect
+		mResult=""
+	
+		admin.Disable
+	
+	End If
+End Sub
+
+
+Sub Activity_KeyPress (KeyCode As Int) As Boolean 'Return True to consume the event
+	If KeyCode = KeyCodes.KEYCODE_BACK Then
+		D.TapToClose
+		Return True
+	End If
+End Sub
+
+Sub BeforeClose
+	' do something before close
+	If connected = True Then
+		podaci.Close
+		serial1.Disconnect
+	End If
+    
+	
+	Label4.Visible = True
+	Label3.Visible = False
+End Sub
+
+Sub Serial1_Connected (Success As Boolean)
+	
+	If Success Then
+		ToastMessageShow("Connected successfully", False)
+	
+		
+		connected = True
+	
+		Label3.Visible = True
+		Label4.Visible = False
+		If ast.IsInitialized Then ast.Close
+		ast.Initialize(Me, "ast", serial1.InputStream, serial1.OutputStream)
+		podaci.Initialize(serial1.OutputStream)
+		mResult = (mResult_lift & ";" & mResult_mode & ";" & mResult_auto & ";" & mResul_Tare & "*" & CRLF)
+		podaci.Write(mResult)
+		podaci.Flush
+		mResult=""
+	Else
+		connected = False
+		Label4.Visible = True
+		Label3.Visible = False
+		Msgbox(LastException.Message, "Error connecting.")
+
+	End If
+	
+End Sub
+Sub mnuConnect_Click
+	If serial1.IsEnabled = False Then
+		Msgbox("Please enable Bluetooth.", "")
+	Else
+		serial1.Disconnect
+		Dim PairedDevices As Map
+		PairedDevices = serial1.GetPairedDevices
+		Dim l As List
+		l.Initialize
+		For i = 0 To PairedDevices.Size - 1
+			l.Add(PairedDevices.GetKeyAt(i)) 'add the friendly name to the list
+		Next
+		Dim res As Int
+		res = InputList(l, "Choose device", -1) 'show list with paired devices
+		If res <> DialogResponse.CANCEL Then
+			serial1.Connect(PairedDevices.Get(l.Get(res))) 'convert the name to mac address
+		End If
+    
+	End If
+End Sub
+Sub mnuDisconnect_Click
+	If connected = True Then
+		podaci.Close
+		serial1.Disconnect
+	End If
+    
+	
+	Label4.Visible = True
+	Label3.Visible = False
+	ExitApplication
+End Sub
+
+Sub mnuDisc_Click
+	If connected = True Then
+		podaci.Close
+		serial1.Disconnect
+	End If
+    
+	
+	Label4.Visible = True
+	Label3.Visible = False
+
+End Sub
+Sub SCAN_Click
+	If connected Then
+		ToastMessageShow("Filling started", False)
+	End If
+End Sub
+Sub SEND_Data
+	If connected Then
+		'Msgbox(mResult, "")
+		ToastMessageShow("Data send.", False)
+		mResult = (mResult_lift & ";" & mResult_mode & ";" & mResult_auto & ";" & mResul_Tare & "*" & CRLF)
+		podaci.Write(mResult)
+		podaci.Flush
+	
+	
+		mResult = ""
+		mResul_Tare = "TN"
+	End If
+End Sub
+
+Sub ast_Error
+	ToastMessageShow("Network Error: " & LastException.Message, True)
+End Sub
+
+Sub ast_Terminated
+	ToastMessageShow("Broken Connection !!!",True)
+End Sub
+
+Sub ast_NewText( Text As String)
+	
+	'Recv = "Potentiometer Value : " & Text
+	'ToastMessageShow(Recv, False)
+	Dim Rec_ive As Float
+	Dim mR_lift As Float
+	Recv = Text
+	Label11.Text = Recv
+	If IsNumber(Recv) Then
+	Out = Recv
+	Gauge1.CurrentValue = Out
+	Rec_ive = Recv
+	mR_lift = mResult_lift
+	If mResult_mode = "hel" And mResult_auto = "aut" Then
+		If Rec_ive >= mR_lift And mResult_auto = "aut" Then
+			mResult_auto = "man"
+			Button1.Color = Colors.Red
+			Button1.Text = "AUTO FILLING COMPLETE"
+			Label2.Color = Colors.Red
+			Label5.Color = Colors.Red
+			Label2.Text = "Valve FAST fill OFF"
+			Label5.Text = "Valve FAST fill OFF"
+		End If
+		If Rec_ive < mR_lift And Rec_ive < (mR_lift - 1) And mResult_auto = "aut" Then
+		    Label2.Color = Colors.Green
+			Label5.Color = Colors.Green
+			Label2.Text = "Valve FAST fill ON"
+			Label5.Text = "Valve FAST fill ON"
+			
+		End If
+		If Rec_ive < mR_lift And Rec_ive > (mR_lift - 1) And mResult_auto = "aut" Then
+			Label2.Color = Colors.Red
+			Label5.Color = Colors.Green
+			Label2.Text = "Valve FAST fill OFF"
+			Label5.Text = "Valve FAST fill ON"
+			
+			End If
+		Else
+			If Rec_ive >= mR_lift And mResult_auto = "aut" Then
+				mResult_auto = "man"
+				Button1.Color = Colors.Red
+				Button1.Text = "AUTO FILLING COMPLETE"
+				Label2.Color = Colors.Red
+				Label5.Color = Colors.Red
+				Label6.Color = Colors.Green
+				Label2.Text = "Valve FAST fill OFF"
+				Label5.Text = "Valve FAST fill OFF"
+				Label6.Text = "Valve EXIT ON"
+			End If
+			If Rec_ive < mR_lift And Rec_ive < (mR_lift - 1) And mResult_auto = "aut" Then
+				Label2.Color = Colors.Green
+				Label5.Color = Colors.Green
+				Label6.Color = Colors.Red
+				Label2.Text = "Valve FAST fill ON"
+				Label5.Text = "Valve FAST fill ON"
+				Label6.Text = "Valve EXIT OFF"
+			
+			End If
+			If Rec_ive < mR_lift And Rec_ive > (mR_lift - 1) And mResult_auto = "aut" Then
+				Label2.Color = Colors.Red
+				Label5.Color = Colors.Green
+				Label6.Color = Colors.Red
+				Label2.Text = "Valve FAST fill OFF"
+				Label5.Text = "Valve FAST fill ON"
+				Label6.Text = "Valve EXIT OFF"
+			
+			End If
+			End If
+		
+	End If
+	 
+End Sub
+
+Sub Admin_StateChanged (NewState As Int, OldState As Int)
+	'btnSearchForDevices.Enabled = (NewState = admin.STATE_ON)
+	'btnAllowConnection.Enabled = btnSearchForDevices.Enabled
+	
+End Sub
+
+Sub AStream_NewData (Buffer() As Byte)
+	'BytesToString(Buffer, 0, Buffer.Length, "UTF8")
+	'ToastMessageShow("olala", False)
+	
+	Dim msg As String
+	msg = BytesToString(Buffer, 0, Buffer.Length, "UTF8")
+	ToastMessageShow(msg, False)
+End Sub
+
+
+Sub AStream_Error
+	ToastMessageShow("Connection is broken.", True)
+	Label4.Visible = True
+	Label3.Visible = False
+End Sub
+
+Sub AStream_Terminated
+	AStream_Error
+End Sub
+'Sub Sleep(ms As Long)
+'Dim now As Long
+ '  If ms > 1000 Then ms =1000   'avoid application not responding error
+  ' now=DateTime.now
+  ' Do Until (DateTime.now>now+ms)
+  '   DoEvents
+  ' Loop
+'End Sub
+Sub Wait(Sekunden As Int)
+	Dim Ti As Long
+	Ti = DateTime.Now + (Sekunden * 1000)
+	Do While DateTime.Now < Ti
+		DoEvents
+	Loop
+End Sub
+
+
+Private Sub EditText1_EnterPressed
+	
+	ToastMessageShow("Value must be betwen 0 and 20!", True)
+	Button1.Color = Colors.Yellow
+	Button1.Text = "AUTO FILLING INACTIV"
+	If EditText1.Text = ""  Then
+		EditText1.Text = "8"
+	End If
+	mResult_lift = EditText1.Text
+	SEND_Data
+	
+End Sub
+
+Sub CStr(o As Object) As String
+	Return "" & o
+End Sub
+
+Sub CInt(o As Object) As Int
+	Return Floor(o)
+End Sub
+
+Sub CLng(o As Object) As Long
+	Return Floor(o)
+End Sub
